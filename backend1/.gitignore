@@ -1,0 +1,9 @@
+# Environment variables (secrets & passwords)
+.env
+
+# Dependencies (never push node_modules, anyone can reinstall with npm install)
+node_modules/
+
+# OS & Editor junk
+.DS_Store
+Thumbs.db
