@@ -244,3 +244,10 @@ img {
     font-size: 28px;
     cursor: pointer;
 }
+
+.error-message {
+    color: #EB1E1E;
+    font-size: 14px;
+    margin: 0 0 10px;
+    text-align: center;
+}
