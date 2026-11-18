@@ -1,5 +1,8 @@
+//crear clase
 class SubscribeView {
+    //constructor obtiene elementos html
     constructor() {
+        //ejecuta elemento con ese id
         this.subscribeBtn = document.getElementById("subscribe-btn");
         this.modal = document.getElementById("subscribe-modal");
         this.closeBtn = document.getElementById("close-modal");
@@ -8,7 +11,7 @@ class SubscribeView {
 
         this.bindModalEvents();
     }
-
+    //introduce event listeners 
     bindModalEvents() {
         this.subscribeBtn.addEventListener("click", () => this.openModal());
         this.closeBtn.addEventListener("click", () => this.closeModal());
