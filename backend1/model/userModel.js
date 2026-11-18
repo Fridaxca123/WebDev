@@ -15,5 +15,11 @@ const createUser = async (name, email) => {
     );
     return res.rows[0];
 };
+const fetchAll = async () => {
+    const res = await pool.query(
+        'SELECT names, email FROM clients'
+    );
+    return res.rows;
+}
 //export func so other files can use it 
 module.exports = { createUser };

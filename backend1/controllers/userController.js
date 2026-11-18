@@ -24,4 +24,15 @@ const createUser = async (req, res) => {
 
     }
 }
+const getUsers = async (req, res) => {
+    try {
+        const users = await userModel.fetchAll();
+        req.status(201).json(users);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error retrieving users' });
+
+    }
+}
 module.exports = { createUser };
