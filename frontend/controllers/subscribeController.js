@@ -10,11 +10,16 @@ class SubscribeController {
     //gestiona registro
     async handleSubmit() {
         //obtener datos
-        const { name, email } = this.view.getFormData();
+        const { name, email, password } = this.view.getFormData();
+        if (password.trim().length < 8) {
+            this.view.showError('The password must be 8 characters long');
+            return;
+
+        }
 
         try {
             //llama model
-            const newUser = await this.model.registerUser(name, email);
+            const newUser = await this.model.registerUser(name, email, password);
             //muestra res exitoso
             this.view.showSuccess(newUser.name, newUser.email);
             //si error 

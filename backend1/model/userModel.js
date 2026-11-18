@@ -4,20 +4,20 @@ const pool = require('../config/db.js')
 //createUser arrow func
 //async allows to use await inside the function using async so you dont block
 //parameters(name email)
-const createUser = async (name, email) => {
+const createUser = async (name, email, password) => {
     //return promise and await waits until the promise is resolved
     const res = await pool.query(
         //values are place holders
         //returning return newly inserted row
-        'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
+        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
         //provides actual values 
-        [name, email]
+        [name, email, password]
     );
     return res.rows[0];
 };
 const fetchAll = async () => {
     const res = await pool.query(
-        'SELECT names, email FROM clients'
+        'SELECT names, email, password FROM users'
     );
     return res.rows;
 }

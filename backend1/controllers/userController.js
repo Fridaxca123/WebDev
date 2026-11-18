@@ -5,13 +5,17 @@ const userModel = require('../model/userModel');
 const createUser = async (req, res) => {
     try {
         //extract info
-        const { name, email } = req.body;
+        const { name, email, password } = req.body;
         //validate inputs
-        if (!name?.trim() || !email?.trim()) {
-            return res.status(400).json({ error: 'Name and email are compulsory' });
+        if (!name?.trim() || !email?.trim() || !password?.trim()) {
+            return res.status(400).json({ error: 'All files need to be filled' });
+        }
+        else if (password.trim().length < 8) {
+            return res.status(400).json({ error: 'Password must have 8 characters' });
+
         }
         //call the model
-        const newUser = await userModel.createUser(name.trim(), email.trim());
+        const newUser = await userModel.createUser(name.trim(), email.trim(), password.trim());
         //sends response
         res.status(201).json(newUser); //201 created
         //if something goes wrong like db connection failing
@@ -35,4 +39,4 @@ const getUsers = async (req, res) => {
 
     }
 }
-module.exports = { createUser };
+module.exports = { createUser, getUsers };

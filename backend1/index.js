@@ -1,6 +1,9 @@
 require('dotenv').config(); // 1. Load variables from .env first
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const pool = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 
 // 2. Create the Express application
@@ -19,8 +22,18 @@ app.get('/', (req, res) => {
     res.json({ mensaje: 'API funcionando correctamente' });
 });
 
-// 5. Start listening for requests
+// 5. Initialize database tables then start listening for requests
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Servidor Express corriendo en http://localhost:${PORT}`);
-});
+const initSQL = fs.readFileSync(path.join(__dirname, 'init.sql'), 'utf8');
+
+pool.query(initSQL)
+    .then(() => {
+        console.log('Database tables initialized');
+        app.listen(PORT, () => {
+            console.log(`Servidor Express corriendo en http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error('Failed to initialize database tables:', err.message);
+        process.exit(1);
+    });
