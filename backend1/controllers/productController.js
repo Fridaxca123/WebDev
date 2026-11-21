@@ -47,4 +47,43 @@ const createProduct = async (req, res) => {
     }
 };
 
-module.exports = { createProduct };
+const deleteProduct = async (req, res) => {
+    try {
+        // Get product ID from URL
+        const { id } = req.params;
+        const productId = Number(id);
+
+        // Validate ID
+        if (!Number.isInteger(productId) || productId <= 0) {
+            return res.status(400).json({
+                error: 'Invalid product ID'
+            });
+        }
+
+        // Call model
+        const deletedProduct = await productModel.deleteProduct(productId);
+
+        // Check if product exists
+        if (!deletedProduct) {
+            return res.status(404).json({
+                error: 'Product not found'
+            });
+        }
+
+        // Send response
+        return res.status(200).json({
+            message: 'Product deleted successfully',
+            product: deletedProduct
+        });
+
+
+    } catch (error) {
+        console.error('deleteProduct error:', error);
+
+        return res.status(500).json({
+            error: 'Internal server error'
+        });
+    }
+}
+
+module.exports = { createProduct, deleteProduct };

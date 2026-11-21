@@ -1,8 +1,9 @@
 //define url
 const express = require('express');
 const router = express.Router();
-const priceController = require('../controllers/priceController');
+const productController = require('../controllers/productController');
 
-router.post('/', productController.createProduct);     // POST /usuarios
+router.post('/', productController.createProduct);     // POST /products
+router.delete('/:id', productController.deleteProduct)
 
 module.exports = router;

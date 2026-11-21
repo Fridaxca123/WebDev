@@ -5,9 +5,9 @@ CREATE TABLE IF NOT EXISTS users (
   password TEXT  NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS products{
-  product_id SERIAL PRIMARY KEY
-  product_name  TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS products (
+  product_id SERIAL PRIMARY KEY,
+  product_name TEXT NOT NULL,
   price MONEY NOT NULL,
-  quantity INTEGER NOT NULL,
-}
+  quantity INTEGER NOT NULL
+);

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const pool = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 // 2. Create the Express application
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json()); // Translates incoming JSON bodies into req.body
 // 4. Mount your MVC Routes
 // Any request starting with /user is forwarded to userRoutes.js
 app.use('/user', userRoutes);
+app.use('/products', productRoutes);
 
 // Optional health-check route to verify the server works in your browser
 app.get('/', (req, res) => {

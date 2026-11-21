@@ -11,9 +11,20 @@ const pool = new Pool({
     port: process.env.DB_PORT, // Automatically reads 5433 from your .env
 });
 
-// Optional: tests database 
+// Prevent unexpected DB disconnections from crashing the server
+pool.on('error', (err) => {
+    console.error('Unexpected PostgreSQL pool error:', err.message);
+});
+
+// Optional: test database connection and release the client
 pool.connect()
-    .then(() => console.log('Connected to PostgreSQL in Docker!'))
+    .then((client) => {
+        client.on('error', (err) => {
+            console.error('PostgreSQL client error:', err.message);
+        });
+        client.release();
+        console.log('Connected to PostgreSQL in Docker!');
+    })
     .catch((err) => console.error('Database connection error:', err.message));
 
 module.exports = pool;
