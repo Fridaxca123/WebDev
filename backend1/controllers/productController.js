@@ -86,4 +86,16 @@ const deleteProduct = async (req, res) => {
     }
 }
 
-module.exports = { createProduct, deleteProduct };
+const getProducts = async (req, res) => {
+    try {
+        const products = await productModel.getProducts();
+        res.status(200).json(products);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error retrieving producst' });
+
+    }
+}
+
+module.exports = { createProduct, deleteProduct, getProducts };

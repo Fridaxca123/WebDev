@@ -39,4 +39,7 @@ const getUsers = async (req, res) => {
 
     }
 }
+
 module.exports = { createUser, getUsers };
+
+

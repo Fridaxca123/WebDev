@@ -15,4 +15,13 @@ const deleteProduct = async (product_id) => {
     );
     return res.rows[0];
 }
-module.exports = { createProduct, deleteProduct };
+
+async function getProducts() {
+    const res = await pool.query(
+        'SELECT product_name, price, quantity FROM products',
+    )
+    return res.rows;
+}
+
+module.exports = { createProduct, deleteProduct, getProducts };
+
