@@ -65,13 +65,29 @@ nav {
     margin: 0 0 10px;
 }
 
-.container button {
+.container button,
+.btn-primary {
     background-color: #F8BED7;
     border-radius: 25px;
     height: 40px;
     width: 200px;
     margin: 40px 0 30px;
     color: #EB1E1E;
+    border: none;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+    margin: 0;
+}
+
+.container button:hover,
+.btn-primary:hover {
+    background-color: #f5a8c9;
+    transform: translateY(-2px);
 }
 
 h1 {

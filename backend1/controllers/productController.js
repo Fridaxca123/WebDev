@@ -49,21 +49,18 @@ const createProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     try {
-        // Get product ID from URL
+
         const { id } = req.params;
         const productId = Number(id);
 
-        // Validate ID
         if (!Number.isInteger(productId) || productId <= 0) {
             return res.status(400).json({
                 error: 'Invalid product ID'
             });
         }
 
-        // Call model
         const deletedProduct = await productModel.deleteProduct(productId);
 
-        // Check if product exists
         if (!deletedProduct) {
             return res.status(404).json({
                 error: 'Product not found'
@@ -98,4 +95,46 @@ const getProducts = async (req, res) => {
     }
 }
 
-module.exports = { createProduct, deleteProduct, getProducts };
+const changeProduct = async (req, res) => {
+    try {
+        const { product_name, price, quantity } = req.body;
+        // Get product ID from URL
+        const { id } = req.params;
+        const productId = Number(id);
+
+        // Validate ID
+        if (!Number.isInteger(productId) || productId <= 0) {
+            return res.status(400).json({
+                error: 'Invalid product ID'
+            });
+        }
+
+        // Call model
+        const changeProduct = await productModel.changeProduct(
+            productId, product_name, price, quantity
+        );
+
+        // Check if product exists
+        if (!changeProduct) {
+            return res.status(404).json({
+                error: 'Product not found'
+            });
+        }
+
+        // Send response
+        return res.status(200).json({
+            message: 'Product changed successfully',
+            product: changeProduct
+        });
+
+
+    } catch (error) {
+        console.error('changeProduct error:', error);
+
+        return res.status(500).json({
+            error: 'Internal server error'
+        });
+    }
+}
+
+module.exports = { createProduct, deleteProduct, getProducts, changeProduct };

@@ -16,12 +16,20 @@ const deleteProduct = async (product_id) => {
     return res.rows[0];
 }
 
+async function changeProduct(product_id, product_name, price, quantity) {
+    const res = await pool.query(
+        'UPDATE products SET product_name = $2, price = $3, quantity = $4  WHERE product_id = $1 RETURNING *',
+        [product_id, product_name, price, quantity]
+    );
+    return res.rows[0];
+}
+
 async function getProducts() {
     const res = await pool.query(
-        'SELECT product_name, price, quantity FROM products',
+        'SELECT product_id, product_name, price, quantity FROM products',
     )
     return res.rows;
 }
 
-module.exports = { createProduct, deleteProduct, getProducts };
+module.exports = { createProduct, deleteProduct, getProducts, changeProduct };
 

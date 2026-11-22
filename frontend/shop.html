@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Marko+One&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="./app-shop.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+
+
+    <main class="min-h-screen bg-[#FEF3E7]">
+        <div class="max-w-6xl mx-auto px-6 py-12">
+
+            <!-- Header -->
+            <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-12">
+                <div>
+                    <p class="text-sm font-medium text-[#EB1E1E] uppercase tracking-widest mb-2">
+                        Inventory Dashboard
+                    </p>
+                    <h1 class="text-4xl font-extrabold text-[#EB1E1E]">
+                        Products<span class="text-[#EB1E1E]">.</span>
+                    </h1>
+                    <p class="text-[#444444] mt-2">
+                        Manage and keep track of your products.
+                    </p>
+                </div>
+
+                <div class="button-container">
+                    <button id="register-product-btn" class="btn-primary">Register Product</button>
+                </div>
+            </header>
+            <div id="products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Products injected here -->
+            </div>
+
+        </div>
+    </main>
+
+
+    <div id="footer"></div>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-product-modal" class="close">&times;</span>
+            <h2>Register Product</h2>
+            <form id="product-form">
+                <label for="product-name">Name</label>
+                <input type="text" id="product-name" name="product_name" required>
+
+                <label for="product-price">Price</label>
+                <input type="number" id="product-price" name="price" step="0.01" min="0" required>
+
+                <label for="product-quantity">Quantity</label>
+                <input type="number" id="product-quantity" name="quantity" min="0" required>
+
+                <button type="submit">Register Product</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
