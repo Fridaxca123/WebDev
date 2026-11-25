@@ -6,6 +6,11 @@ class ProductView {
         this.closeBtn = document.getElementById('close-product-modal');
         this.form = document.getElementById('product-form');
         this.modalContent = this.modal.querySelector('.modal-content');
+        this.modalTitle = document.getElementById('product-modal-title');
+        this.modalSubmit = document.getElementById('product-modal-submit');
+        this.productIdInput = document.getElementById('product-id');
+
+        this.mode = 'register';
     }
 
     renderProducts(products) {
@@ -24,9 +29,9 @@ class ProductView {
                 <p>Price: ${product.price}</p>
                 <p>Quantity: ${product.quantity}</p>
                 <div class="button-container">
+                    <button class="btn-primary btn-edit" data-id="${product.product_id}">Edit</button>
                     <button class="btn-primary btn-delete" data-id="${product.product_id}">Delete</button>
                 </div>
-                
             `;
             this.list.appendChild(card);
         });
@@ -42,10 +47,31 @@ class ProductView {
 
     clearForm() {
         this.form.reset();
+        this.productIdInput.value = '';
+    }
+
+    openModalForRegister() {
+        this.mode = 'register';
+        this.clearForm();
+        this.modalTitle.textContent = 'Register Product';
+        this.modalSubmit.textContent = 'Register Product';
+        this.openModal();
+    }
+
+    openModalForEdit(product) {
+        this.mode = 'edit';
+        document.getElementById('product-name').value = product.product_name;
+        document.getElementById('product-price').value = product.price;
+        document.getElementById('product-quantity').value = product.quantity;
+        this.productIdInput.value = product.product_id;
+        this.modalTitle.textContent = 'Edit Product';
+        this.modalSubmit.textContent = 'Save Changes';
+        this.openModal();
     }
 
     getFormData() {
         return {
+            product_id: this.productIdInput.value,
             product_name: document.getElementById('product-name').value,
             price: document.getElementById('product-price').value,
             quantity: document.getElementById('product-quantity').value,
@@ -53,7 +79,7 @@ class ProductView {
     }
 
     bindRegisterProduct(handler) {
-        this.registerBtn.addEventListener('click', () => this.openModal());
+        this.registerBtn.addEventListener('click', () => this.openModalForRegister());
         this.closeBtn.addEventListener('click', () => this.closeModal());
         this.modal.addEventListener('click', (event) => {
             if (event.target === this.modal) {
@@ -64,15 +90,31 @@ class ProductView {
         this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             this.clearError();
-            handler();
+            handler(this.mode);
         });
     }
 
     bindDeleteProduct(handler) {
         this.list.addEventListener('click', (event) => {
-            if (event.target.classList.contains('btn-primary')) {
+            if (event.target.classList.contains('btn-delete')) {
                 const productId = event.target.getAttribute('data-id');
                 handler(productId);
+            }
+        });
+    }
+
+    bindChangeProduct(handler) {
+        this.list.addEventListener('click', (event) => {
+            if (event.target.classList.contains('btn-edit')) {
+                const productId = event.target.getAttribute('data-id');
+                const productCard = event.target.closest('.border');
+                const product = {
+                    product_id: productId,
+                    product_name: productCard.querySelector('h3').textContent,
+                    price: productCard.querySelector('p:nth-of-type(1)').textContent.replace('Price: ', ''),
+                    quantity: productCard.querySelector('p:nth-of-type(2)').textContent.replace('Quantity: ', ''),
+                };
+                handler(product);
             }
         });
     }

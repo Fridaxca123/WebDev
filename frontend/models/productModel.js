@@ -38,6 +38,21 @@ class ProductModel {
         }
         return response.json();
     }
+
+    async changeProduct(product_id, productData) {
+        const response = await fetch(`${API_URL}/products/${product_id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productData),
+        });
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    }
 }
 
 export default ProductModel;

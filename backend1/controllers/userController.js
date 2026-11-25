@@ -21,7 +21,7 @@ const createUser = async (req, res) => {
         //if something goes wrong like db connection failing
     } catch (error) {
         console.error('createUser error:', error); //log error for debugging
-        if (error.code === '23505') {
+        if (error.message && error.message.includes('UNIQUE constraint failed')) {
             return res.status(400).json({ error: 'That email has been used before.' });
         }
         res.status(500).json({ error: 'Internal server error' });
@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
 const getUsers = async (req, res) => {
     try {
         const users = await userModel.fetchAll();
-        req.status(201).json(users);
+        res.status(200).json(users);
 
     } catch (error) {
         console.error(error);

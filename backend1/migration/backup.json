@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Frida Vargas",
+      "email": "fridavargas48@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": 2,
+      "name": "Ricardo Rodriguez",
+      "email": "romr020606@gmail.com",
+      "password": "12345678"
+    }
+  ],
+  "products": [
+    {
+      "product_id": 9,
+      "product_name": "maquillaje",
+      "price": 34,
+      "quantity": 22
+    }
+  ]
+}

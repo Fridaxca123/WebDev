@@ -1,25 +1,15 @@
-//importing postgres connection for db file
-const pool = require('../config/db.js')
-//define func
-//createUser arrow func
-//async allows to use await inside the function using async so you dont block
-//parameters(name email)
+const { run, get, all } = require('../config/db.js');
+
 const createUser = async (name, email, password) => {
-    //return promise and await waits until the promise is resolved
-    const res = await pool.query(
-        //values are place holders
-        //returning return newly inserted row
-        'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-        //provides actual values 
+    const result = await run(
+        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
         [name, email, password]
     );
-    return res.rows[0];
+    return get('SELECT * FROM users WHERE id = ?', [result.lastID]);
 };
+
 const fetchAll = async () => {
-    const res = await pool.query(
-        'SELECT names, email, password FROM users'
-    );
-    return res.rows;
-}
-//export func so other files can use it 
-module.exports = { createUser };
+    return all('SELECT id, name, email, password FROM users');
+};
+
+module.exports = { createUser, fetchAll };
